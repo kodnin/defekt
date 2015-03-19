@@ -1,3 +1,6 @@
+[![Gem Version](https://badge.fury.io/rb/defekt.svg)](http://badge.fury.io/rb/defekt)
+[![Build Status](https://travis-ci.org/kodnin/defekt.svg?branch=master)](https://travis-ci.org/kodnin/defekt)
+
 # Defekt
 
 A micro testing framework in Ruby.
