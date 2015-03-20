@@ -56,7 +56,16 @@ module Defekt
     private
 
     def status
-      failed? ? 'failed' : 'errored'
+      case
+      when passed?
+        'passed'
+      when failed?
+        'failed'
+      when errored?
+        'errored'
+      else
+        'not run'
+      end
     end
 
     def summary
