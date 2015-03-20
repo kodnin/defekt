@@ -42,20 +42,20 @@ class Defekt::TestObjectTest < Minitest::Test
   end
 
   def test_before_and_after
-    @pass.run # run with original before and after
+    @pass.run # with original before and after
     assert_equal 'after', @pass.object.feedback
 
     stubbed_fail_object = FakeTest.new
     stub(stubbed_fail_object, :after, nil)
     stub(@fail, :object, stubbed_fail_object)
-    @fail.run # run with original before and stubbed after
+    @fail.run # with original before and stubbed after
     assert_equal 'before', @fail.object.feedback
 
     stubbed_error_object = FakeTest.new
     stub(stubbed_error_object, :before, nil)
     stub(stubbed_error_object, :after, nil)
     stub(@error, :object, stubbed_error_object)
-    @error.run # run with stubbed before and stubbed after
+    @error.run # with stubbed before and after
     assert_nil @error.object.feedback
   end
 
