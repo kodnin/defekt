@@ -1,33 +1,18 @@
 require_relative 'test_helper'
 
 class Defekt::TestObjectTest < Minitest::Test
-  class Fake
-    def passes; end
-    def fails; raise Defekt::Exceptions::TestError; end
-    def errors; raise StandardError; end
-  end
-
   def setup
-    @pass = Defekt::TestObject.new(Fake.instance_method(:passes))
-    @fail = Defekt::TestObject.new(Fake.instance_method(:fails))
-    @error = Defekt::TestObject.new(Fake.instance_method(:errors))
+    @pass = Defekt::TestObject.new(FakeTest.instance_method(:test_passes))
+    @fail = Defekt::TestObject.new(FakeTest.instance_method(:test_fails))
+    @error = Defekt::TestObject.new(FakeTest.instance_method(:test_errors))
   end
 
   def test_initialize
     assert_instance_of Defekt::TestObject, @pass
   end
 
-  def test_klass
-    assert_equal Fake, @pass.klass
-  end
-
   def test_methot
     assert_instance_of UnboundMethod, @pass.methot
-  end
-
-  def test_location
-    assert_instance_of String, @pass.location
-    assert_includes @pass.location, 'test/test_object_test.rb:5'
   end
 
   def test_exception
@@ -37,10 +22,41 @@ class Defekt::TestObjectTest < Minitest::Test
     assert_equal StandardError.new, @pass.exception
   end
 
+  def test_klass
+    assert_equal FakeTest, @pass.klass
+  end
+
+  def test_object
+    assert_instance_of FakeTest, @pass.object
+  end
+
+  def test_location
+    assert_instance_of String, @pass.location
+    assert_includes @pass.location, 'test/support/fake_test.rb:12'
+  end
+
   def test_run
     assert_equal '.', @pass.run
     assert_equal 'f', @fail.run
     assert_equal 'e', @error.run
+  end
+
+  def test_before_and_after
+    @pass.run # run with original before and after
+    assert_equal 'after', @pass.object.feedback
+
+    stubbed_fail_object = FakeTest.new
+    stub(stubbed_fail_object, :after, nil)
+    stub(@fail, :object, stubbed_fail_object)
+    @fail.run # run with original before and stubbed after
+    assert_equal 'before', @fail.object.feedback
+
+    stubbed_error_object = FakeTest.new
+    stub(stubbed_error_object, :before, nil)
+    stub(stubbed_error_object, :after, nil)
+    stub(@error, :object, stubbed_error_object)
+    @error.run # run with stubbed before and stubbed after
+    assert_nil @error.object.feedback
   end
 
   def test_ran?
@@ -77,8 +93,5 @@ class Defekt::TestObjectTest < Minitest::Test
     stub(@fail, :ran?, true)
     stub(@fail, :exception, Defekt::Exceptions::TestError.new)
     assert_instance_of String, @fail.report
-    assert_includes @fail.report, 'Defekt::TestObjectTest::Fake#fails'
-    assert_includes @fail.report, 'test/test_object_test.rb:6 failed'
-    assert_includes @fail.report, 'Defekt::Exceptions::TestError (TestError)'
   end
 end

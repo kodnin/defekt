@@ -1,5 +1,11 @@
 module Defekt
   class TestClass
+    def before
+    end
+
+    def after
+    end
+
     def self.children
       @children ||= []
     end

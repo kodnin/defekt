@@ -10,18 +10,26 @@ module Defekt
       methot.owner
     end
 
+    def object
+      @object ||= klass.new
+    end
+
     def location
       methot.source_location.join(':')
     end
 
     def run
+      @ran = true
+
       begin
-        @ran = true
-        methot.bind(klass.new).call
+        object.before
+        methot.bind(object).call
         '.'
       rescue => e
         @exception = e
-        failed? ? 'f' : 'e'
+        status.chars.first
+      ensure
+        object.after
       end
     end
 
@@ -34,16 +42,25 @@ module Defekt
     end
 
     def failed?
-      !passed? && exception.kind_of?(Defekt::Exceptions::TestError)
+      ran? && !passed? && exception.kind_of?(Defekt::Exceptions::TestError)
     end
 
     def errored?
-      !failed? && exception
+      ran? && !failed? && exception.kind_of?(Exception)
     end
 
     def report
-      "#{klass}##{methot} at #{location} #{failed? ? 'failed' : 'errored'}" +
-        "\n" + "  #{exception.message} (#{exception.class.name})"
+      [summary, exception.message].join("\n  ")
+    end
+
+    private
+
+    def status
+      failed? ? 'failed' : 'errored'
+    end
+
+    def summary
+      "#{klass}##{methot} at #{location} #{status}"
     end
   end
 end
