@@ -33,6 +33,10 @@ module Defekt
       end
     end
 
+    def report
+      "#{klass}##{methot.name} at #{location} #{status}"
+    end
+
     def ran?
       !!@ran
     end
@@ -49,10 +53,6 @@ module Defekt
       ran? && !failed? && exception.kind_of?(Exception)
     end
 
-    def report
-      [summary, exception.message].join("\n  ")
-    end
-
     private
 
     def status
@@ -66,10 +66,6 @@ module Defekt
       else
         'not run'
       end
-    end
-
-    def summary
-      "#{klass}##{methot} at #{location} #{status}"
     end
   end
 end

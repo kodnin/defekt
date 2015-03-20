@@ -93,5 +93,7 @@ class Defekt::TestObjectTest < Minitest::Test
     stub(@fail, :ran?, true)
     stub(@fail, :exception, Defekt::Exceptions::TestError.new)
     assert_instance_of String, @fail.report
+    assert_includes @fail.report, 'FakeTest#test_fails'
+    assert_includes @fail.report, 'test/support/fake_test.rb:15 failed'
   end
 end
