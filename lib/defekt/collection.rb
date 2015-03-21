@@ -11,5 +11,21 @@ module Defekt
         end
       end.flatten
     end
+
+    def passed
+      @passed ||= all.select(&:passed?)
+    end
+
+    def failed
+      @failed ||= all.select(&:failed?)
+    end
+
+    def errored
+      @errored ||= all.select(&:errored?)
+    end
+
+    def defekt
+      @defekt ||= failed + errored
+    end
   end
 end
