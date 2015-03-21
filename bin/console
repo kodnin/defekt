@@ -2,6 +2,6 @@
 
 require 'bundler/setup'
 require 'defekt'
-
 require 'pry'
+
 Pry.start
