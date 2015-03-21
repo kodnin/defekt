@@ -46,7 +46,7 @@ module Defekt
     end
 
     def failed?
-      ran? && !passed? && exception.kind_of?(Defekt::Exceptions::TestError)
+      ran? && !passed? && exception.kind_of?(Exceptions::TestError)
     end
 
     def errored?
