@@ -1,14 +1,14 @@
 require_relative 'test_helper'
 
-class Defekt::TestObjectTest < Minitest::Test
+class Defekt::BaseObjectTest < Minitest::Test
   def setup
-    @pass = Defekt::TestObject.new(FakeTest.instance_method(:test_passes))
-    @fail = Defekt::TestObject.new(FakeTest.instance_method(:test_fails))
-    @error = Defekt::TestObject.new(FakeTest.instance_method(:test_errors))
+    @pass = Defekt::BaseObject.new(FakeTest.instance_method(:test_passes))
+    @fail = Defekt::BaseObject.new(FakeTest.instance_method(:test_fails))
+    @error = Defekt::BaseObject.new(FakeTest.instance_method(:test_errors))
   end
 
   def test_initialize
-    assert_instance_of Defekt::TestObject, @pass
+    assert_instance_of Defekt::BaseObject, @pass
   end
 
   def test_methot
@@ -77,7 +77,7 @@ class Defekt::TestObjectTest < Minitest::Test
     refute @fail.failed?
 
     stub(@fail, :ran?, true)
-    stub(@fail, :exception, Defekt::Exceptions::TestError.new)
+    stub(@fail, :exception, Defekt::Errors::BaseError.new)
     assert @fail.failed?
   end
 
@@ -91,7 +91,7 @@ class Defekt::TestObjectTest < Minitest::Test
 
   def test_report
     stub(@fail, :ran?, true)
-    stub(@fail, :exception, Defekt::Exceptions::TestError.new)
+    stub(@fail, :exception, Defekt::Errors::BaseError.new)
     assert_instance_of String, @fail.report
     assert_includes @fail.report, 'FakeTest#test_fails'
     assert_includes @fail.report, 'test/support/fake_test.rb:15 failed'

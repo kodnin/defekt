@@ -1,5 +1,5 @@
 module Defekt
-  class TestClass
+  class BaseClass
     def before
     end
 

@@ -1,5 +1,5 @@
 module Defekt
-  class TestObject
+  class BaseObject
     attr_reader :methot, :exception
 
     def initialize(methot)
@@ -46,7 +46,7 @@ module Defekt
     end
 
     def failed?
-      ran? && !passed? && exception.kind_of?(Exceptions::TestError)
+      ran? && !passed? && exception.kind_of?(Errors::BaseError)
     end
 
     def errored?

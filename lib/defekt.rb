@@ -1,7 +1,7 @@
+require 'defekt/base_class'
+require 'defekt/base_object'
 require 'defekt/collection'
-require 'defekt/exceptions'
-require 'defekt/test_class'
-require 'defekt/test_object'
+require 'defekt/errors'
 require 'defekt/version'
 
 module Defekt

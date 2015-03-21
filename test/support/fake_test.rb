@@ -13,7 +13,7 @@ class FakeTest
   end
 
   def test_fails
-    raise Defekt::Exceptions::TestError
+    raise Defekt::Errors::BaseError
   end
 
   def test_errors
