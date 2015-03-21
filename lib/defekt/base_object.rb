@@ -1,6 +1,6 @@
 module Defekt
   class BaseObject
-    attr_reader :methot, :exception
+    attr_reader :methot, :error
 
     def initialize(methot)
       @methot = methot
@@ -26,10 +26,23 @@ module Defekt
         methot.bind(object).call
         '.'
       rescue => e
-        @exception = e
+        @error = e
         status.chars.first
       ensure
         object.after
+      end
+    end
+
+    def status
+      case
+      when passed?
+        'passed'
+      when failed?
+        'failed'
+      when errored?
+        'errored'
+      else
+        'did not run'
       end
     end
 
@@ -42,30 +55,19 @@ module Defekt
     end
 
     def passed?
-      ran? && exception.nil?
+      ran? && error.nil?
     end
 
     def failed?
-      ran? && !passed? && exception.kind_of?(Errors::BaseError)
+      ran? && !passed? && error.kind_of?(Errors::BaseError)
     end
 
     def errored?
-      ran? && !failed? && exception.kind_of?(Exception)
+      ran? && !failed? && error.kind_of?(Exception)
     end
 
-    private
-
-    def status
-      case
-      when passed?
-        'passed'
-      when failed?
-        'failed'
-      when errored?
-        'errored'
-      else
-        'not run'
-      end
+    def defekt?
+      failed? || errored?
     end
   end
 end

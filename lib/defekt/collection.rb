@@ -25,7 +25,7 @@ module Defekt
     end
 
     def defekt
-      @defekt ||= failed + errored
+      @defekt ||= all.select(&:defekt?)
     end
   end
 end

@@ -15,11 +15,11 @@ class Defekt::BaseObjectTest < Minitest::Test
     assert_instance_of UnboundMethod, @pass.methot
   end
 
-  def test_exception
-    assert_nil @pass.exception
+  def test_error
+    assert_nil @pass.error
 
-    @pass.instance_variable_set(:@exception, StandardError.new)
-    assert_equal StandardError.new, @pass.exception
+    @pass.instance_variable_set(:@error, StandardError.new)
+    assert_equal StandardError.new, @pass.error
   end
 
   def test_klass
@@ -59,6 +59,27 @@ class Defekt::BaseObjectTest < Minitest::Test
     assert_nil @error.object.feedback
   end
 
+  def test_status
+    assert_equal 'did not run', @pass.status
+
+    stub(@pass, :passed?, true)
+    assert_equal 'passed', @pass.status
+
+    stub(@fail, :failed?, true)
+    assert_equal 'failed', @fail.status
+
+    stub(@error, :errored?, true)
+    assert_equal 'errored', @error.status
+  end
+
+  def test_report
+    stub(@fail, :ran?, true)
+    stub(@fail, :error, Defekt::Errors::BaseError.new)
+    assert_instance_of String, @fail.report
+    assert_includes @fail.report, 'FakeTest#test_fails'
+    assert_includes @fail.report, 'test/support/fake_test.rb:15 failed'
+  end
+
   def test_ran?
     refute @pass.ran?
 
@@ -71,29 +92,60 @@ class Defekt::BaseObjectTest < Minitest::Test
 
     stub(@pass, :ran?, true)
     assert @pass.passed?
+
+    stub(@fail, :ran?, true)
+    stub(@fail, :error, Defekt::Errors::BaseError.new)
+    refute @fail.passed?
+
+    stub(@error, :ran?, true)
+    stub(@error, :error, StandardError.new)
+    refute @error.passed?
   end
 
   def test_failed?
     refute @fail.failed?
 
     stub(@fail, :ran?, true)
-    stub(@fail, :exception, Defekt::Errors::BaseError.new)
+    stub(@fail, :error, Defekt::Errors::BaseError.new)
     assert @fail.failed?
+
+    stub(@pass, :ran?, true)
+    refute @pass.failed?
+
+    stub(@error, :ran?, true)
+    stub(@error, :error, StandardError.new)
+    refute @error.failed?
   end
 
   def test_errored?
     refute @error.errored?
 
     stub(@error, :ran?, true)
-    stub(@error, :exception, StandardError.new)
+    stub(@error, :error, StandardError.new)
     assert @error.errored?
+
+    stub(@pass, :ran?, true)
+    refute @pass.errored?
+
+    stub(@fail, :ran?, true)
+    stub(@fail, :error, Defekt::Errors::BaseError.new)
+    refute @fail.errored?
   end
 
-  def test_report
+  def test_defekt?
+    refute @pass.defekt?
+    refute @fail.defekt?
+    refute @error.defekt?
+
+    stub(@pass, :ran?, true)
+    refute @pass.defekt?
+
     stub(@fail, :ran?, true)
-    stub(@fail, :exception, Defekt::Errors::BaseError.new)
-    assert_instance_of String, @fail.report
-    assert_includes @fail.report, 'FakeTest#test_fails'
-    assert_includes @fail.report, 'test/support/fake_test.rb:15 failed'
+    stub(@fail, :error, Defekt::Errors::BaseError.new)
+    assert @fail.defekt?
+
+    stub(@error, :ran?, true)
+    stub(@error, :error, StandardError.new)
+    assert @error.defekt?
   end
 end
