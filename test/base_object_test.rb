@@ -41,7 +41,7 @@ class Defekt::BaseObjectTest < Minitest::Test
     assert_equal 'e', @error.run
   end
 
-  def test_before_and_after
+  def test_before_after
     @pass.run # with original before and after
     assert_equal 'after', @pass.object.feedback
 
