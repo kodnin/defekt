@@ -9,5 +9,10 @@ module Defekt
         super.sub('Defekt::Errors::', '')
       end
     end
+
+    TrueError = Class.new(BaseError)
+    EqualToError = Class.new(BaseError)
+    IncludedInError = Class.new(BaseError)
+    InstanceOfError = Class.new(BaseError)
   end
 end
