@@ -10,9 +10,10 @@ module Defekt
       end
     end
 
-    TrueError = Class.new(BaseError)
-    EqualToError = Class.new(BaseError)
-    IncludedInError = Class.new(BaseError)
-    InstanceOfError = Class.new(BaseError)
+    private
+
+    def self.const_missing(klass)
+      const_set(klass, Class.new(BaseError))
+    end
   end
 end

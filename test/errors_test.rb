@@ -22,19 +22,9 @@ class Defekt::ErrorsTest < Minitest::Test
     assert_equal 'BaseError', @error.class.name
   end
 
-  def test_true_error
-    assert_kind_of Defekt::Errors::BaseError, Defekt::Errors::TrueError.new
-  end
-
-  def test_equal_to_error
-    assert_kind_of Defekt::Errors::BaseError, Defekt::Errors::EqualToError.new
-  end
-
-  def test_included_in_error
-    assert_kind_of Defekt::Errors::BaseError, Defekt::Errors::IncludedInError.new
-  end
-
-  def test_instance_of_error
-    assert_kind_of Defekt::Errors::BaseError, Defekt::Errors::InstanceOfError.new
+  def test_const_missing
+    non_existing_error = Defekt::Errors::NonExistingError.new
+    assert_kind_of Defekt::Errors::BaseError, non_existing_error
+    assert_instance_of Defekt::Errors::NonExistingError, non_existing_error
   end
 end
