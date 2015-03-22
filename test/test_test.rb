@@ -132,20 +132,20 @@ class Defekt::TestTest < Minitest::Test
     refute @fail.errored?
   end
 
-  def test_defekt?
-    refute @pass.defekt?
-    refute @fail.defekt?
-    refute @error.defekt?
+  def test_broken?
+    refute @pass.broken?
+    refute @fail.broken?
+    refute @error.broken?
 
     stub(@pass, :ran?, true)
-    refute @pass.defekt?
+    refute @pass.broken?
 
     stub(@fail, :ran?, true)
     stub(@fail, :error, Defekt::Errors::BaseError.new)
-    assert @fail.defekt?
+    assert @fail.broken?
 
     stub(@error, :ran?, true)
     stub(@error, :error, StandardError.new)
-    assert @error.defekt?
+    assert @error.broken?
   end
 end

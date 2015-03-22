@@ -37,9 +37,9 @@ class Defekt::CollectionTest < Minitest::Test
     refute_includes @collection.errored.map(&:methot).map(&:name), :test_fails
   end
 
-  def test_defekt
-    assert_includes @collection.defekt.map(&:methot).map(&:name), :test_fails
-    assert_includes @collection.defekt.map(&:methot).map(&:name), :test_errors
-    refute_includes @collection.defekt.map(&:methot).map(&:name), :test_passes
+  def test_broken
+    assert_includes @collection.broken.map(&:methot).map(&:name), :test_fails
+    assert_includes @collection.broken.map(&:methot).map(&:name), :test_errors
+    refute_includes @collection.broken.map(&:methot).map(&:name), :test_passes
   end
 end

@@ -66,7 +66,7 @@ module Defekt
       ran? && !failed? && error.kind_of?(Exception)
     end
 
-    def defekt?
+    def broken?
       failed? || errored?
     end
   end
