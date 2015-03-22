@@ -1,14 +1,14 @@
 require_relative 'test_helper'
 
-class Defekt::BaseObjectTest < Minitest::Test
+class Defekt::TestTest < Minitest::Test
   def setup
-    @pass = Defekt::BaseObject.new(FakeTest.instance_method(:test_passes))
-    @fail = Defekt::BaseObject.new(FakeTest.instance_method(:test_fails))
-    @error = Defekt::BaseObject.new(FakeTest.instance_method(:test_errors))
+    @pass = Defekt::Test.new(FakeTest.instance_method(:test_passes))
+    @fail = Defekt::Test.new(FakeTest.instance_method(:test_fails))
+    @error = Defekt::Test.new(FakeTest.instance_method(:test_errors))
   end
 
   def test_initialize
-    assert_instance_of Defekt::BaseObject, @pass
+    assert_instance_of Defekt::Test, @pass
   end
 
   def test_methot

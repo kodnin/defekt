@@ -13,7 +13,7 @@ class Defekt::CollectionTest < Minitest::Test
 
   def test_all
     assert_instance_of Array, @collection.all
-    assert_instance_of Defekt::BaseObject, @collection.all.first
+    assert_instance_of Defekt::Test, @collection.all.first
     assert_instance_of UnboundMethod, @collection.all.first.methot
     all_tests = [:test_passes, :test_fails, :test_errors]
     assert_equal all_tests, @collection.all.map(&:methot).map(&:name)

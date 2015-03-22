@@ -1,5 +1,5 @@
 module Defekt
-  class BaseObject
+  class Test
     attr_reader :methot, :error
 
     def initialize(methot)

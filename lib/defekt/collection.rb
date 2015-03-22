@@ -7,7 +7,7 @@ module Defekt
     def all
       @all ||= @klass.descendants.map do |klass|
         klass.instance_methods.grep(/^test_/).map do |methot|
-          BaseObject.new(klass.instance_method(methot))
+          Test.new(klass.instance_method(methot))
         end
       end.flatten
     end
