@@ -1,11 +1,11 @@
 require_relative 'test_helper'
 
-class Defekt::BaseClassTest < Minitest::Test
-  This = Class.new(Defekt::BaseClass)
+class Defekt::BaseTest < Minitest::Test
+  This = Class.new(Defekt::Base)
   That = Class.new(This)
 
   def setup
-    @class = Defekt::BaseClass
+    @class = Defekt::Base
   end
 
   def test_class

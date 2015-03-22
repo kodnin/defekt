@@ -1,5 +1,5 @@
 module Defekt
-  class BaseClass
+  class Base
     include Assertions
 
     def before
