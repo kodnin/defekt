@@ -32,7 +32,7 @@ class Defekt::TestTest < Minitest::Test
 
   def test_source_location
     assert_instance_of String, @pass.source_location
-    assert_includes @pass.source_location, 'test/support/fake_test.rb:12'
+    assert_includes @pass.source_location, 'test/support/fake_test.rb:10'
   end
 
   def test_run
@@ -43,20 +43,20 @@ class Defekt::TestTest < Minitest::Test
 
   def test_before_after
     @pass.run # with original before and after
-    assert_equal 'after', @pass.instance.feedback
+    assert_equal 'after', @pass.instance.instance_variable_get(:@callback)
 
     stubbed_fail_instance = FakeTest.new
     stub(stubbed_fail_instance, :after, nil)
     stub(@fail, :instance, stubbed_fail_instance)
     @fail.run # with original before and stubbed after
-    assert_equal 'before', @fail.instance.feedback
+    assert_equal 'before', @fail.instance.instance_variable_get(:@callback)
 
     stubbed_error_instance = FakeTest.new
     stub(stubbed_error_instance, :before, nil)
     stub(stubbed_error_instance, :after, nil)
     stub(@error, :instance, stubbed_error_instance)
     @error.run # with stubbed before and after
-    assert_nil @error.instance.feedback
+    assert_nil @error.instance.instance_variable_get(:@callback)
   end
 
   def test_status
@@ -77,7 +77,7 @@ class Defekt::TestTest < Minitest::Test
     stub(@fail, :error, Defekt::Errors::BaseError.new)
     assert_instance_of String, @fail.summary
     assert_includes @fail.summary, 'FakeTest#test_fails'
-    assert_includes @fail.summary, 'test/support/fake_test.rb:15 failed'
+    assert_includes @fail.summary, 'test/support/fake_test.rb:13 failed'
   end
 
   def test_ran?

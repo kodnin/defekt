@@ -1,12 +1,10 @@
 class FakeTest
-  attr_reader :feedback
-
   def before
-    @feedback = 'before'
+    @callback = 'before'
   end
 
   def after
-    @feedback = 'after'
+    @callback = 'after'
   end
 
   def test_passes
