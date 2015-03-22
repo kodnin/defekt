@@ -72,12 +72,12 @@ class Defekt::TestTest < Minitest::Test
     assert_equal 'errored', @error.status
   end
 
-  def test_report
+  def test_summary
     stub(@fail, :ran?, true)
     stub(@fail, :error, Defekt::Errors::BaseError.new)
-    assert_instance_of String, @fail.report
-    assert_includes @fail.report, 'FakeTest#test_fails'
-    assert_includes @fail.report, 'test/support/fake_test.rb:15 failed'
+    assert_instance_of String, @fail.summary
+    assert_includes @fail.summary, 'FakeTest#test_fails'
+    assert_includes @fail.summary, 'test/support/fake_test.rb:15 failed'
   end
 
   def test_ran?

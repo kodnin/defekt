@@ -46,7 +46,7 @@ module Defekt
       end
     end
 
-    def report
+    def summary
       "#{klass}##{methot.name} at #{source_location} #{status}"
     end
 
