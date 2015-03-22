@@ -3,7 +3,7 @@
 
 # Defekt
 
-A micro testing framework in Ruby.
+A micro testing framework.
 
 ## Installation
 

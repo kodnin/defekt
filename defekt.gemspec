@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['kodnin@gmail.com']
 
   spec.summary       = 'Micro testing framework'
-  spec.description   = 'Micro testing framework in Ruby'
+  spec.description   = 'Micro testing framework'
   spec.homepage      = 'https://github.com/kodnin/defekt'
   spec.license       = 'MIT'
 
