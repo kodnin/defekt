@@ -34,4 +34,11 @@ class Defekt::AssertionsTest < Minitest::Test
     assert_equal '~1~ is not an instance of String (InstanceOfError)', e.message
     assert_nil @object.instance_of!(String, '1')
   end
+
+  def test_kind_of!
+    e = assert_raises(Defekt::Errors::KindOfError) { @object.kind_of!(String, 1) }
+    assert_equal '~1~ is not a kind of String (KindOfError)', e.message
+    assert_nil @object.kind_of!(String, '1')
+    assert_nil @object.kind_of!(Object, '1')
+  end
 end

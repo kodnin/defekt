@@ -24,6 +24,12 @@ module Defekt
       end
     end
 
+    def kind_of!(klass, instance)
+      unless instance.kind_of?(klass)
+        raise Errors::KindOfError, message(instance, 'is not a kind of', klass)
+      end
+    end
+
     private
 
     def message(object1, text, object2)
