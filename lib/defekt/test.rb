@@ -10,8 +10,8 @@ module Defekt
       methot.owner
     end
 
-    def object
-      @object ||= klass.new
+    def instance
+      @instance ||= klass.new
     end
 
     def location
@@ -22,14 +22,14 @@ module Defekt
       @ran = true
 
       begin
-        object.before
-        methot.bind(object).call
+        instance.before
+        methot.bind(instance).call
         '.'
       rescue => e
         @error = e
         status.chars.first
       ensure
-        object.after
+        instance.after
       end
     end
 

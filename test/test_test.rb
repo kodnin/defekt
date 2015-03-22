@@ -26,8 +26,8 @@ class Defekt::TestTest < Minitest::Test
     assert_equal FakeTest, @pass.klass
   end
 
-  def test_object
-    assert_instance_of FakeTest, @pass.object
+  def test_instance
+    assert_instance_of FakeTest, @pass.instance
   end
 
   def test_location
@@ -43,20 +43,20 @@ class Defekt::TestTest < Minitest::Test
 
   def test_before_after
     @pass.run # with original before and after
-    assert_equal 'after', @pass.object.feedback
+    assert_equal 'after', @pass.instance.feedback
 
-    stubbed_fail_object = FakeTest.new
-    stub(stubbed_fail_object, :after, nil)
-    stub(@fail, :object, stubbed_fail_object)
+    stubbed_fail_instance = FakeTest.new
+    stub(stubbed_fail_instance, :after, nil)
+    stub(@fail, :instance, stubbed_fail_instance)
     @fail.run # with original before and stubbed after
-    assert_equal 'before', @fail.object.feedback
+    assert_equal 'before', @fail.instance.feedback
 
-    stubbed_error_object = FakeTest.new
-    stub(stubbed_error_object, :before, nil)
-    stub(stubbed_error_object, :after, nil)
-    stub(@error, :object, stubbed_error_object)
+    stubbed_error_instance = FakeTest.new
+    stub(stubbed_error_instance, :before, nil)
+    stub(stubbed_error_instance, :after, nil)
+    stub(@error, :instance, stubbed_error_instance)
     @error.run # with stubbed before and after
-    assert_nil @error.object.feedback
+    assert_nil @error.instance.feedback
   end
 
   def test_status
