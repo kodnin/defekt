@@ -14,7 +14,7 @@ module Defekt
       @instance ||= klass.new
     end
 
-    def location
+    def source_location
       methot.source_location.join(':')
     end
 
@@ -47,7 +47,7 @@ module Defekt
     end
 
     def report
-      "#{klass}##{methot.name} at #{location} #{status}"
+      "#{klass}##{methot.name} at #{source_location} #{status}"
     end
 
     def ran?

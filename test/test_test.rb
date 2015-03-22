@@ -30,9 +30,9 @@ class Defekt::TestTest < Minitest::Test
     assert_instance_of FakeTest, @pass.instance
   end
 
-  def test_location
-    assert_instance_of String, @pass.location
-    assert_includes @pass.location, 'test/support/fake_test.rb:12'
+  def test_source_location
+    assert_instance_of String, @pass.source_location
+    assert_includes @pass.source_location, 'test/support/fake_test.rb:12'
   end
 
   def test_run
