@@ -20,26 +20,30 @@ class Defekt::CollectionTest < Minitest::Test
   end
 
   def test_passed
-    assert_includes @collection.passed.map(&:methot).map(&:name), :test_passes
-    refute_includes @collection.passed.map(&:methot).map(&:name), :test_fails
-    refute_includes @collection.passed.map(&:methot).map(&:name), :test_errors
+    collection = @collection.passed.map(&:methot).map(&:name)
+    assert_includes collection, :test_passes
+    refute_includes collection, :test_fails
+    refute_includes collection, :test_errors
   end
 
   def test_failed
-    assert_includes @collection.failed.map(&:methot).map(&:name), :test_fails
-    refute_includes @collection.failed.map(&:methot).map(&:name), :test_passes
-    refute_includes @collection.failed.map(&:methot).map(&:name), :test_errors
+    collection = @collection.failed.map(&:methot).map(&:name)
+    assert_includes collection, :test_fails
+    refute_includes collection, :test_passes
+    refute_includes collection, :test_errors
   end
 
   def test_errored
-    assert_includes @collection.errored.map(&:methot).map(&:name), :test_errors
-    refute_includes @collection.errored.map(&:methot).map(&:name), :test_passes
-    refute_includes @collection.errored.map(&:methot).map(&:name), :test_fails
+    collection = @collection.errored.map(&:methot).map(&:name)
+    assert_includes collection, :test_errors
+    refute_includes collection, :test_passes
+    refute_includes collection, :test_fails
   end
 
   def test_broken
-    assert_includes @collection.broken.map(&:methot).map(&:name), :test_fails
-    assert_includes @collection.broken.map(&:methot).map(&:name), :test_errors
-    refute_includes @collection.broken.map(&:methot).map(&:name), :test_passes
+    collection = @collection.broken.map(&:methot).map(&:name)
+    assert_includes collection, :test_fails
+    assert_includes collection, :test_errors
+    refute_includes collection, :test_passes
   end
 end
