@@ -6,6 +6,6 @@ require_relative 'support/fake_test'
 
 class Minitest::Test
   def stub(object, methot, value)
-    object.instance_eval { define_singleton_method(methot) { value } }
+    object.instance_eval { define_singleton_method(methot) { |*args| value } }
   end
 end
