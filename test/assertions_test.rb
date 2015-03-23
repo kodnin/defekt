@@ -23,6 +23,12 @@ class Defekt::AssertionsTest < Minitest::Test
     assert_nil @object.equal_to!(1, 1)
   end
 
+  def test_identical_to!
+    e = assert_raises(Defekt::Errors::IdenticalToError) { @object.identical_to!('1', '1') }
+    assert_equal '~1~ is not identical to 1 (IdenticalToError)', e.message
+    assert_nil @object.identical_to!(1, 1)
+  end
+
   def test_included_in!
     e = assert_raises(Defekt::Errors::IncludedInError) { @object.included_in!([], 1) }
     assert_equal '~1~ is not included in [] (IncludedInError)', e.message

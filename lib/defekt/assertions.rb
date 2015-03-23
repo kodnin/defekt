@@ -7,8 +7,14 @@ module Defekt
     end
 
     def equal_to!(expected, actual)
-      unless expected == actual
+      unless actual == expected
         raise Errors::EqualToError, message(actual, 'is not equal to', expected)
+      end
+    end
+
+    def identical_to!(expected, actual)
+      unless actual.equal?(expected)
+        raise Errors::IdenticalToError, message(actual, 'is not identical to', expected)
       end
     end
 
