@@ -5,11 +5,11 @@ module Defekt
     end
 
     def all
-      @all ||= @klass.descendants.map do |klass|
+      @all ||= @klass.descendants.flat_map do |klass|
         klass.instance_methods.grep(/^test_/).map do |methot|
           Test.new(klass.instance_method(methot))
         end
-      end.flatten
+      end
     end
 
     def passed
