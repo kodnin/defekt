@@ -6,16 +6,8 @@ module Defekt
       @methot = methot
     end
 
-    def klass
-      methot.owner
-    end
-
     def instance
-      @instance ||= klass.new
-    end
-
-    def source_location
-      methot.source_location.join(':')
+      @instance ||= methot.owner.new
     end
 
     def run
@@ -47,7 +39,7 @@ module Defekt
     end
 
     def summary
-      "#{klass}##{methot.name} at #{source_location} #{status}"
+      "#{methot.owner}##{methot.name} at #{methot.source_location.join(':')} #{status}"
     end
 
     def ran?

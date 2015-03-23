@@ -22,17 +22,8 @@ class Defekt::TestTest < Minitest::Test
     assert_equal StandardError.new, @pass.error
   end
 
-  def test_klass
-    assert_equal FakeTest, @pass.klass
-  end
-
   def test_instance
     assert_instance_of FakeTest, @pass.instance
-  end
-
-  def test_source_location
-    assert_instance_of String, @pass.source_location
-    assert_includes @pass.source_location, 'test/support/fake_test.rb:10'
   end
 
   def test_run
