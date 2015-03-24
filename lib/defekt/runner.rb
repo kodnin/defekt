@@ -15,15 +15,15 @@ module Defekt
       self
     end
 
+    def report
+      puts nil, nil, report_broken, nil, statistics
+      self
+    end
+
     def statistics
       "#{collection.passed.length} passed, #{collection.failed.length} failed" +
         ", #{collection.errored.length} errored of #{collection.all.length} " +
         "tests (in #{benchmark.real.round(3)} seconds)"
-    end
-
-    def report
-      puts nil, nil, report_broken, nil, statistics
-      self
     end
 
     private

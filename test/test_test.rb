@@ -50,19 +50,6 @@ class Defekt::TestTest < Minitest::Test
     assert_nil @error.instance.instance_variable_get(:@callback)
   end
 
-  def test_status
-    assert_equal 'did not run', @pass.status
-
-    stub(@pass, :passed?, true)
-    assert_equal 'passed', @pass.status
-
-    stub(@fail, :failed?, true)
-    assert_equal 'failed', @fail.status
-
-    stub(@error, :errored?, true)
-    assert_equal 'errored', @error.status
-  end
-
   def test_summary
     stub(@fail, :ran?, true)
     stub(@fail, :error, Defekt::Errors::BaseError.new)
@@ -138,5 +125,18 @@ class Defekt::TestTest < Minitest::Test
     stub(@error, :ran?, true)
     stub(@error, :error, StandardError.new)
     assert @error.broken?
+  end
+
+  def test_status
+    assert_equal 'did not run', @pass.status
+
+    stub(@pass, :passed?, true)
+    assert_equal 'passed', @pass.status
+
+    stub(@fail, :failed?, true)
+    assert_equal 'failed', @fail.status
+
+    stub(@error, :errored?, true)
+    assert_equal 'errored', @error.status
   end
 end

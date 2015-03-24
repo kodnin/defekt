@@ -28,17 +28,17 @@ class Defekt::RunnerTest < Minitest::Test
     assert_equal @runner, @runner.run
   end
 
-  def test_statistics
-    stub(@runner, :print, nil)
-    @runner.run
-    regex = /^\d+ passed, \d+ failed, \d+ errored of \d+ tests \(in \d+\.\d+ seconds\)$/
-    assert_match regex, @runner.statistics
-  end
-
   def test_report
     assert_output { @runner.run }
     stub(@runner, :print, nil)
     stub(@runner, :puts, nil)
     assert_equal @runner, @runner.run.report
+  end
+
+  def test_statistics
+    stub(@runner, :print, nil)
+    @runner.run
+    regex = /^\d+ passed, \d+ failed, \d+ errored of \d+ tests \(in \d+\.\d+ seconds\)$/
+    assert_match regex, @runner.statistics
   end
 end

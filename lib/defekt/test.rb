@@ -25,19 +25,6 @@ module Defekt
       end
     end
 
-    def status
-      case
-      when passed?
-        'passed'
-      when failed?
-        'failed'
-      when errored?
-        'errored'
-      else
-        'did not run'
-      end
-    end
-
     def summary
       "#{methot.owner}##{methot.name} at #{methot.source_location.join(':')} #{status}"
     end
@@ -60,6 +47,19 @@ module Defekt
 
     def broken?
       failed? || errored?
+    end
+
+    def status
+      case
+      when passed?
+        'passed'
+      when failed?
+        'failed'
+      when errored?
+        'errored'
+      else
+        'did not run'
+      end
     end
   end
 end
