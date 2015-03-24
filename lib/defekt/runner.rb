@@ -16,7 +16,9 @@ module Defekt
     end
 
     def report
-      puts nil, nil, report_broken, nil, statistics
+      puts nil, nil
+      puts report_broken, nil if collection.broken.any?
+      puts statistics
       self
     end
 
