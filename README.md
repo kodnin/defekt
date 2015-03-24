@@ -23,7 +23,40 @@ Or install it yourself as:
 
 ## Usage
 
-Usage instructions will be provided soon.
+Inherit test classes from ```Defekt::Base``` and define tests prefixed with ```test_```. ```before``` and ```after``` methods are optional, which will be invoked around a test.
+
+```ruby
+require 'defekt'
+
+class Person
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
+  end
+end
+
+class PersonTest < Defekt::Base
+  def before
+    @person = Person.new('kodnin')
+  end
+
+  def test_initialize
+    instance_of! Person, @person
+  end
+
+  def test_name
+    equal_to! 'kodnin', @person.name
+  end
+
+  def test_age
+    @person.stub(:age) { 'unknown' }
+    equal_to! 'unknown', @person.age
+  end
+end
+
+Defekt::Runner.new(Defekt::Collection.new(Defekt::Base)).run.report
+```
 
 ## Development
 
