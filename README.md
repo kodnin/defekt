@@ -55,7 +55,7 @@ class PersonTest < Defekt::Base
   end
 end
 
-Defekt::Runner.new(Defekt::Collection.new(Defekt::Base)).run.report
+Defekt.run
 ```
 
 ## Development
