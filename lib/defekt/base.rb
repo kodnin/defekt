@@ -2,11 +2,7 @@ module Defekt
   class Base
     include Assertions
 
-    def before
-    end
-
-    def after
-    end
+    [:before, :after].each { |methot| define_method(methot) {} }
 
     def self.children
       @children ||= []
