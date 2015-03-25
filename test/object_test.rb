@@ -1,7 +1,14 @@
 require_relative 'test_helper'
-load File.expand_path('../../lib/defekt/object.rb', __FILE__) # reload Object
 
 class ObjectTest < Minitest::Test
+  def setup
+    load File.expand_path('../../lib/defekt/object.rb', __FILE__) # Defekt Object
+  end
+
+  def teardown
+    load 'minitest/mock.rb' # Minitest Object
+  end
+
   def test_stub
     object = Object.new
 
