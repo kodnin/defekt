@@ -38,7 +38,7 @@ class Defekt::RunnerTest < Minitest::Test
   def test_statistics
     stub(@runner, :print, nil)
     @runner.run
-    regex = /^\d+ passed, \d+ failed, \d+ errored of \d+ tests \(in \d+\.\d+ seconds\)$/
-    assert_match regex, @runner.statistics
+    format = /^\d+ passed, \d+ failed, \d+ errored of \d+ tests \(in \d+\.\d+ seconds\)$/
+    assert_match format, @runner.statistics
   end
 end
