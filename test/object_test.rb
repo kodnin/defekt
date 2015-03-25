@@ -12,6 +12,10 @@ class ObjectTest < Minitest::Test
   def test_stub
     object = Object.new
 
+    refute_respond_to object, :foo
+    object.stub(:foo) { nil }
+    assert_respond_to object, :foo
+
     e = assert_raises(ArgumentError) { object.stub(:object_id) }
     assert_equal 'block is required', e.message
 
