@@ -37,25 +37,32 @@ class Defekt::TestTest < Minitest::Test
     assert_equal 'after', @pass.instance.instance_variable_get(:@callback)
 
     stubbed_fail_instance = FakeTest.new
-    stub(stubbed_fail_instance, :after, nil)
-    stub(@fail, :instance, stubbed_fail_instance)
-    @fail.run # with original before and stubbed after
-    assert_equal 'before', @fail.instance.instance_variable_get(:@callback)
+    stubbed_fail_instance.stub :after, nil do
+      @fail.stub :instance, stubbed_fail_instance do
+        @fail.run # with original before and stubbed after
+        assert_equal 'before', @fail.instance.instance_variable_get(:@callback)
+      end
+    end
 
     stubbed_error_instance = FakeTest.new
-    stub(stubbed_error_instance, :before, nil)
-    stub(stubbed_error_instance, :after, nil)
-    stub(@error, :instance, stubbed_error_instance)
-    @error.run # with stubbed before and after
-    assert_nil @error.instance.instance_variable_get(:@callback)
+    stubbed_error_instance.stub :before, nil do
+      stubbed_error_instance.stub :after, nil do
+        @error.stub :instance, stubbed_error_instance do
+          @error.run # with stubbed before and after
+          assert_nil @error.instance.instance_variable_get(:@callback)
+        end
+      end
+    end
   end
 
   def test_summary
-    stub(@fail, :ran?, true)
-    stub(@fail, :error, Defekt::Errors::BaseError.new)
-    assert_instance_of String, @fail.summary
-    assert_includes @fail.summary, 'FakeTest#test_fails'
-    assert_includes @fail.summary, 'test/support/fake_test.rb:13 failed'
+    @fail.stub :ran?, true do
+      @fail.stub :error, Defekt::Errors::BaseError.new do
+        assert_instance_of String, @fail.summary
+        assert_includes @fail.summary, 'FakeTest#test_fails'
+        assert_includes @fail.summary, 'test/support/fake_test.rb:13 failed'
+      end
+    end
   end
 
   def test_ran?
@@ -68,46 +75,61 @@ class Defekt::TestTest < Minitest::Test
   def test_passed?
     refute @pass.passed?
 
-    stub(@pass, :ran?, true)
-    assert @pass.passed?
+    @pass.stub :ran?, true do
+      assert @pass.passed?
+    end
 
-    stub(@fail, :ran?, true)
-    stub(@fail, :error, Defekt::Errors::BaseError.new)
-    refute @fail.passed?
+    @fail.stub :ran?, true do
+      @fail.stub :error, Defekt::Errors::BaseError.new do
+        refute @fail.passed?
+      end
+    end
 
-    stub(@error, :ran?, true)
-    stub(@error, :error, StandardError.new)
-    refute @error.passed?
+    @error.stub :ran?, true do
+      @error.stub :error, StandardError.new do
+        refute @error.passed?
+      end
+    end
   end
 
   def test_failed?
     refute @fail.failed?
 
-    stub(@fail, :ran?, true)
-    stub(@fail, :error, Defekt::Errors::BaseError.new)
-    assert @fail.failed?
+    @fail.stub :ran?, true do
+      @fail.stub :error, Defekt::Errors::BaseError.new do
+        assert @fail.failed?
+      end
+    end
 
-    stub(@pass, :ran?, true)
-    refute @pass.failed?
+    @pass.stub :ran?, true do
+      refute @pass.failed?
+    end
 
-    stub(@error, :ran?, true)
-    stub(@error, :error, StandardError.new)
-    refute @error.failed?
+    @error.stub :ran?, true do
+      @error.stub :error, StandardError.new do
+        refute @error.failed?
+      end
+    end
   end
 
   def test_errored?
     refute @error.errored?
 
-    stub(@error, :ran?, true)
-    stub(@error, :error, StandardError.new)
-    assert @error.errored?
+    @error.stub :ran?, true do
+      @error.stub :error, StandardError.new do
+        assert @error.errored?
+      end
+    end
 
-    stub(@pass, :ran?, true)
-    refute @pass.errored?
+    @pass.stub :ran?, true do
+      refute @pass.errored?
+    end
 
-    stub(@fail, :ran?, true)
-    stub(@fail, :error, Defekt::Errors::BaseError.new)
-    refute @fail.errored?
+    @fail.stub :ran?, true do
+      @fail.stub :error, Defekt::Errors::BaseError.new do
+        refute @fail.errored?
+      end
+    end
   end
 
   def test_broken?
@@ -115,28 +137,36 @@ class Defekt::TestTest < Minitest::Test
     refute @fail.broken?
     refute @error.broken?
 
-    stub(@pass, :ran?, true)
-    refute @pass.broken?
+    @pass.stub :ran?, true do
+      refute @pass.broken?
+    end
 
-    stub(@fail, :ran?, true)
-    stub(@fail, :error, Defekt::Errors::BaseError.new)
-    assert @fail.broken?
+    @fail.stub :ran?, true do
+      @fail.stub :error, Defekt::Errors::BaseError.new do
+        assert @fail.broken?
+      end
+    end
 
-    stub(@error, :ran?, true)
-    stub(@error, :error, StandardError.new)
-    assert @error.broken?
+    @error.stub :ran?, true do
+      @error.stub :error, StandardError.new do
+        assert @error.broken?
+      end
+    end
   end
 
   def test_status
     assert_equal 'did not run', @pass.status
 
-    stub(@pass, :passed?, true)
-    assert_equal 'passed', @pass.status
+    @pass.stub :passed?, true do
+      assert_equal 'passed', @pass.status
+    end
 
-    stub(@fail, :failed?, true)
-    assert_equal 'failed', @fail.status
+    @fail.stub :failed?, true do
+      assert_equal 'failed', @fail.status
+    end
 
-    stub(@error, :errored?, true)
-    assert_equal 'errored', @error.status
+    @error.stub :errored?, true do
+      assert_equal 'errored', @error.status
+    end
   end
 end

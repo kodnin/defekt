@@ -17,4 +17,7 @@ class FakeTest
   def test_errors
     raise StandardError
   end
+
+  def self.descendants
+  end
 end

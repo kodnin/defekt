@@ -2,9 +2,10 @@ require_relative 'test_helper'
 
 class Defekt::CollectionTest < Minitest::Test
   def setup
-    stub(FakeTest, :descendants, [FakeTest])
     @collection = Defekt::Collection.new(FakeTest)
-    @collection.all.each(&:run)
+    FakeTest.stub :descendants, [FakeTest] do
+      @collection.all.each(&:run) # memoize collection with stubbed descendants and run
+    end
   end
 
   def test_initialize
