@@ -23,7 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
-Inherit test classes from ```Defekt::Base``` and define tests prefixed with ```test_```. ```before``` and ```after``` methods are optional, which will be invoked around a test.
+Inherit your test classes from `Defekt::Base` and define your tests prefixed with `test_`. You can define `before` and `after` methods, which are invoked around each test.
 
 ```ruby
 require 'defekt'
