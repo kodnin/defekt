@@ -10,7 +10,7 @@ class Object
     define_singleton_method(methot) { |*arguments| value }
 
     yield
-
+  ensure
     if singleton_methot_exists
       singleton_class.class_eval do
         alias_method(methot, original)
