@@ -50,9 +50,9 @@ class PersonTest < Defekt::Base
   end
 
   def test_age
-    true! !@person.respond_to?(:age)
+    not_respond_to! @person, :age
     @person.stub(:age, 'unknown') do
-      true! @person.respond_to?(:age)
+      respond_to! @person, :age
       equal_to! 'unknown', @person.age
     end
   end
