@@ -61,6 +61,32 @@ end
 Defekt.run
 ```
 
+## Assertions
+
+All available assertions have negative counterparts prefixed with `not_`.
+
+- true!
+- equal_to!
+- identical_to!
+- included_in!
+- instance_of!
+- kind_of!
+- respond_to!
+
+You can add your own assertions by opening up the `Defekt::Assertions` module.
+
+```ruby
+module Defekt
+  module Assertions
+    def awesome!(value)
+      unless value == 'awesome'
+        raise Errors::AwesomeError, "~#{value}~ is not awesome"
+      end
+    end
+  end
+end
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bin/console` for an interactive prompt that will allow you to experiment.
