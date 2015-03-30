@@ -9,7 +9,7 @@ module Defekt
     end
 
     def self.descendants
-      children + children.map(&:descendants).flatten
+      children + children.flat_map(&:descendants)
     end
 
     private
