@@ -63,15 +63,17 @@ Defekt.run
 
 ## Assertions
 
-All available assertions have negative counterparts prefixed with `not_`.
+Both positive and negative assertions are available.
 
-- true!
-- equal_to!
-- identical_to!
-- included_in!
-- instance_of!
-- kind_of!
-- respond_to!
+Positive | Negative
+--- | ---
+true! | not_true!
+equal_to! | not_equal_to!
+identical_to! | not_identical_to!
+included_in! | not_included_in!
+instance_of! | not_instance_of!
+kind_of! | not_kind_of!
+respond_to! | not_respond_to!
 
 You can add your own assertions by opening up the `Defekt::Assertions` module.
 
