@@ -83,7 +83,7 @@ module Defekt
   module Assertions
     def awesome!(value)
       unless value == 'awesome'
-        raise Errors::AwesomeError, "~#{value}~ is not awesome"
+        raise Errors::AwesomeError, "#{value.inspect} is not awesome"
       end
     end
   end
