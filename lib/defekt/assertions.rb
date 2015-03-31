@@ -12,6 +12,18 @@ module Defekt
       end
     end
 
+    def nil!(value)
+      unless value.nil?
+        raise Errors::NilError, message(value, 'is not', nil)
+      end
+    end
+
+    def not_nil!(value)
+      if value.nil?
+        raise Errors::NotNilError, message(value, 'is', nil)
+      end
+    end
+
     def equal_to!(expected, actual)
       unless actual == expected
         raise Errors::EqualToError, message(actual, 'is not equal to', expected)

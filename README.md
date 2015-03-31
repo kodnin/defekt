@@ -68,6 +68,7 @@ Both positive and negative assertions are available.
 Positive | Negative
 --- | ---
 true! | not_true!
+nil! | not_nil!
 equal_to! | not_equal_to!
 identical_to! | not_identical_to!
 included_in! | not_included_in!

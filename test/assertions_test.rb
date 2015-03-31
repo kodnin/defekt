@@ -23,6 +23,18 @@ class Defekt::AssertionsTest < Minitest::Test
     assert_nil @object.not_true!(false)
   end
 
+  def test_nil!
+    e = assert_raises(Defekt::Errors::NilError) { @object.nil!(1) }
+    assert_equal '1 is not nil (NilError)', e.message
+    assert_nil @object.nil!(nil)
+  end
+
+  def test_not_nil!
+    e = assert_raises(Defekt::Errors::NotNilError) { @object.not_nil!(nil) }
+    assert_equal 'nil is nil (NotNilError)', e.message
+    assert_nil @object.not_nil!(1)
+  end
+
   def test_equal_to!
     e = assert_raises(Defekt::Errors::EqualToError) { @object.equal_to!(1, 2) }
     assert_equal '2 is not equal to 1 (EqualToError)', e.message
