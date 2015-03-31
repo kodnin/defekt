@@ -87,7 +87,7 @@ module Defekt
     private
 
     def message(object1, text, object2)
-      "~#{object1}~ #{text} #{object2}"
+      "#{object1.inspect} #{text} #{object2.inspect}"
     end
   end
 end
