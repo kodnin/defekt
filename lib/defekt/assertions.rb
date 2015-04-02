@@ -96,6 +96,12 @@ module Defekt
       end
     end
 
+    def verify!(mock)
+      unless mock.verify
+        raise Errors::MockExpectationError, 'mock expectation not met'
+      end
+    end
+
     private
 
     def message(object1, text, object2)

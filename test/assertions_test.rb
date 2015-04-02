@@ -1,10 +1,11 @@
 require_relative 'test_helper'
 
 class Defekt::AssertionsTest < Minitest::Test
-  Fake = Class.new { include Defekt::Assertions }
+  FakeTest = Class.new { include Defekt::Assertions }
+  FakeMock = Class.new { def verify; end }
 
   def setup
-    @object = Fake.new
+    @object = FakeTest.new
   end
 
   def test_module
@@ -107,5 +108,16 @@ class Defekt::AssertionsTest < Minitest::Test
     e = assert_raises(Defekt::Errors::NotRespondToError) { @object.not_respond_to!(1, :class) }
     assert_equal '1 does respond to :class (NotRespondToError)', e.message
     assert_nil @object.not_respond_to!(1, :foo)
+  end
+
+  def test_verify!
+    mock = FakeMock.new
+    mock.stub(:verify, false) do
+      e = assert_raises(Defekt::Errors::MockExpectationError) { @object.verify!(mock) }
+      assert_equal 'mock expectation not met (MockExpectationError)', e.message
+    end
+    mock.stub(:verify, true) do
+      assert_nil @object.verify!(mock)
+    end
   end
 end
