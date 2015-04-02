@@ -57,16 +57,16 @@ Defekt.run
 
 Both positive and negative assertions are available.
 
-Positive | Negative
---- | ---
-true! | not_true!
-nil! | not_nil!
-equal_to! | not_equal_to!
-identical_to! | not_identical_to!
-included_in! | not_included_in!
-instance_of! | not_instance_of!
-kind_of! | not_kind_of!
-respond_to! | not_respond_to!
+Positive | Negative | Argument(s)
+--- | --- | ---
+true! | not_true! | value
+nil! | not_nil! | value
+equal_to! | not_equal_to! | expected, actual
+identical_to! | not_identical_to! | expected, actual
+included_in! | not_included_in! | collection, member
+instance_of! | not_instance_of! | class, instance
+kind_of! | not_kind_of! | class, instance
+respond_to! | not_respond_to! | object, method
 
 You can add your own assertions by opening up the `Defekt::Assertions` module.
 
