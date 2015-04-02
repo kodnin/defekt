@@ -60,18 +60,6 @@ class Defekt::AssertionsTest < Minitest::Test
     assert_nil @object.not_identical_to!('1', '1')
   end
 
-  def test_included_in!
-    e = assert_raises(Defekt::Errors::IncludedInError) { @object.included_in!([], 1) }
-    assert_equal '1 is not included in [] (IncludedInError)', e.message
-    assert_nil @object.included_in!([1], 1)
-  end
-
-  def test_not_included_in!
-    e = assert_raises(Defekt::Errors::NotIncludedInError) { @object.not_included_in!([1], 1) }
-    assert_equal '1 is included in [1] (NotIncludedInError)', e.message
-    assert_nil @object.not_included_in!([], 1)
-  end
-
   def test_instance_of!
     e = assert_raises(Defekt::Errors::InstanceOfError) { @object.instance_of!(String, 1) }
     assert_equal '1 is not an instance of String (InstanceOfError)', e.message
@@ -108,6 +96,18 @@ class Defekt::AssertionsTest < Minitest::Test
     e = assert_raises(Defekt::Errors::NotRespondToError) { @object.not_respond_to!(1, :class) }
     assert_equal '1 does respond to :class (NotRespondToError)', e.message
     assert_nil @object.not_respond_to!(1, :foo)
+  end
+
+  def test_included_in!
+    e = assert_raises(Defekt::Errors::IncludedInError) { @object.included_in!([], 1) }
+    assert_equal '1 is not included in [] (IncludedInError)', e.message
+    assert_nil @object.included_in!([1], 1)
+  end
+
+  def test_not_included_in!
+    e = assert_raises(Defekt::Errors::NotIncludedInError) { @object.not_included_in!([1], 1) }
+    assert_equal '1 is included in [1] (NotIncludedInError)', e.message
+    assert_nil @object.not_included_in!([], 1)
   end
 
   def test_verify!

@@ -48,18 +48,6 @@ module Defekt
       end
     end
 
-    def included_in!(collection, member)
-      unless collection.include?(member)
-        raise Errors::IncludedInError, message(member, 'is not included in', collection)
-      end
-    end
-
-    def not_included_in!(collection, member)
-      if collection.include?(member)
-        raise Errors::NotIncludedInError, message(member, 'is included in', collection)
-      end
-    end
-
     def instance_of!(klass, instance)
       unless instance.instance_of?(klass)
         raise Errors::InstanceOfError, message(instance, 'is not an instance of', klass)
@@ -93,6 +81,18 @@ module Defekt
     def not_respond_to!(object, methot)
       if object.respond_to?(methot)
         raise Errors::NotRespondToError, message(object, 'does respond to', methot)
+      end
+    end
+
+    def included_in!(collection, member)
+      unless collection.include?(member)
+        raise Errors::IncludedInError, message(member, 'is not included in', collection)
+      end
+    end
+
+    def not_included_in!(collection, member)
+      if collection.include?(member)
+        raise Errors::NotIncludedInError, message(member, 'is included in', collection)
       end
     end
 
