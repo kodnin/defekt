@@ -22,14 +22,6 @@ class PersonTest < Defekt::Base
   def test_name
     equal_to! 'kodnin', @person.name
   end
-
-  def test_age
-    not_respond_to! @person, :age
-    @person.stub(:age, 'unknown') do
-      respond_to! @person, :age
-      equal_to! 'unknown', @person.age
-    end
-  end
 end
 
 Defekt.run
