@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift(File.expand_path('../../../lib', __FILE__))
 
-require 'defekt'
+require 'defekt/autorun'
 
 class Hacker
   def identity(person)
@@ -29,5 +29,3 @@ class HackerTest < Defekt::Base
     not_respond_to! @hacker, :password
   end
 end
-
-Defekt.run

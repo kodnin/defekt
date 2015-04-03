@@ -1,6 +1,6 @@
 $LOAD_PATH.unshift(File.expand_path('../../../lib', __FILE__))
 
-require 'defekt'
+require 'defekt/autorun'
 
 class Person
   attr_reader :name
@@ -23,5 +23,3 @@ class PersonTest < Defekt::Base
     equal_to! 'kodnin', @person.name
   end
 end
-
-Defekt.run
