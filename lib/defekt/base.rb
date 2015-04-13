@@ -2,7 +2,13 @@ module Defekt
   class Base
     include Assertions
 
-    [:before, :after].each { |methot| define_method(methot) {} }
+    def self.before(&block)
+      define_method(:before, &block)
+    end
+
+    def self.after(&block)
+      define_method(:after, &block)
+    end
 
     def self.test(name, &block)
       safe_name = "test_#{name.gsub(/\s+/, '_')}".to_sym

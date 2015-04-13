@@ -12,6 +12,22 @@ class Defekt::BaseTest < Minitest::Test
     assert_instance_of Class, @class
   end
 
+  def test_before
+    refute @class.class_eval { method_defined?(:before) }
+    assert(@class.class_eval do
+      before { nil }
+      method_defined?(:before)
+    end)
+  end
+
+  def test_after
+    refute @class.class_eval { method_defined?(:after) }
+    assert(@class.class_eval do
+      after { nil }
+      method_defined?(:after)
+    end)
+  end
+
   def test_test
     refute @class.class_eval { method_defined?(:test_undefined) }
     assert(@class.class_eval do

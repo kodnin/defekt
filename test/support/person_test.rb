@@ -11,9 +11,7 @@ class Person
 end
 
 class PersonTest < Defekt::Base
-  def before
-    @person = Person.new('kodnin')
-  end
+  before { @person = Person.new('kodnin') }
 
   test '#initialize' do
     instance_of! Person, @person

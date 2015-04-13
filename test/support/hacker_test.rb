@@ -9,9 +9,7 @@ class Hacker
 end
 
 class HackerTest < Defekt::Base
-  def before
-    @hacker = Hacker.new
-  end
+  before { @hacker = Hacker.new }
 
   test 'mock' do
     mock = Defekt::Mock.new

@@ -14,14 +14,14 @@ module Defekt
       @ran = true
 
       begin
-        instance.before
+        instance.before if instance.respond_to?(:before)
         methot.bind(instance).call
         '.'
       rescue => e
         @error = e
         status.chars.first
       ensure
-        instance.after
+        instance.after if instance.respond_to?(:after)
       end
     end
 
