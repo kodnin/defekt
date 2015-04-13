@@ -12,6 +12,14 @@ class Defekt::BaseTest < Minitest::Test
     assert_instance_of Class, @class
   end
 
+  def test_test
+    refute @class.class_eval { method_defined?(:test_undefined) }
+    assert(@class.class_eval do
+      test('undefined') { nil }
+      method_defined?(:test_undefined)
+    end)
+  end
+
   def test_children
     assert_instance_of Array, @class.children
     assert_equal [This], @class.children

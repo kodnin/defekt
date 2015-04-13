@@ -23,7 +23,7 @@ Or install it yourself as:
 
 ## Usage
 
-Inherit your test classes from `Defekt::Base` and define your tests prefixed with `test_`. You can define `before` and `after` methods, which are invoked around each test. By requiring `defekt/autorun` your tests are automatically run.
+Inherit your test classes from `Defekt::Base` and use the `test` method to define your tests. You can define `before` and `after` methods, which are invoked around each test. By requiring `defekt/autorun` your tests are automatically run.
 
 ```ruby
 require 'defekt/autorun'
@@ -41,11 +41,11 @@ class PersonTest < Defekt::Base
     @person = Person.new('kodnin')
   end
 
-  def test_initialize
+  test '#initialize' do
     instance_of! Person, @person
   end
 
-  def test_name
+  test '#name' do
     equal_to! 'kodnin', @person.name
   end
 end
@@ -98,14 +98,14 @@ class HackerTest < Defekt::Base
     @hacker = Hacker.new
   end
 
-  def test_mock
+  test 'mock' do
     mock = Defekt::Mock.new
     mock.expect(:name, 'kodnin')
     equal_to! 'kodnin', @hacker.identity(mock)
     verify! mock
   end
 
-  def test_stub
+  test 'stub' do
     not_respond_to! @hacker, :password
     @hacker.stub(:password, 'nindok') do
       respond_to! @hacker, :password

@@ -13,14 +13,14 @@ class HackerTest < Defekt::Base
     @hacker = Hacker.new
   end
 
-  def test_mock
+  test 'mock' do
     mock = Defekt::Mock.new
     mock.expect(:name, 'kodnin')
     equal_to! 'kodnin', @hacker.identity(mock)
     verify! mock
   end
 
-  def test_stub
+  test 'stub' do
     not_respond_to! @hacker, :password
     @hacker.stub(:password, 'nindok') do
       respond_to! @hacker, :password

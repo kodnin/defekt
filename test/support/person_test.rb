@@ -15,11 +15,11 @@ class PersonTest < Defekt::Base
     @person = Person.new('kodnin')
   end
 
-  def test_initialize
+  test '#initialize' do
     instance_of! Person, @person
   end
 
-  def test_name
+  test '#name' do
     equal_to! 'kodnin', @person.name
   end
 end
